@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2009-2017 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+<!--    <properties>-->
+<!--        <property name="driver" value="com.mysql.jdbc.Driver"/>-->
+<!--        <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>-->
+<!--        <property name="username" value="root"/>-->
+<!--        <property name="password" value="123456"/>-->
+<!--    </properties>-->
+    <properties resource="jdbc.properties"/>
+
+<!--  ①xml中的标签顺序不能随便调换，否则会提示错误  -->
+    <!--  https://mybatis.net.cn/configuration.html#settings  -->
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+<!--        <setting name="useGeneratedKeys" value="false"/>-->
+        <setting name="useGeneratedKeys" value="true"/>
+        <!--        无法映射-->
+<!--        <setting name="autoMappingBehavior" value="NONE"/>-->
+
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+        <setting name="autoMappingUnknownColumnBehavior" value="WARNING"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="defaultStatementTimeout" value="25"/>
+        <setting name="defaultFetchSize" value="100"/>
+        <setting name="safeRowBoundsEnabled" value="false"/>
+<!--        <setting name="mapUnderscoreToCamelCase" value="false"/>-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="localCacheScope" value="SESSION"/>
+        <setting name="jdbcTypeForNull" value="OTHER"/>
+        <setting name="lazyLoadTriggerMethods" value="equals, clone, hashCode, toString"/>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+    <!-- 定义一个别名 -->
+    <typeAliases>
+<!--        <typeAlias type="cn.tuling.mybatis.po.Role" alias="role" />-->
+        <package name="cn.tuling.mybatis.po"/>
+    </typeAliases>
+    <typeHandlers>
+        <!--    建表中name 是char类型，    -->
+        <typeHandler javaType="string" jdbcType="CHAR" handler="cn.tuling.mybatis.chap3.typehandler.MyTypeHandler" />
+<!--        &lt;!&ndash;    建表中address 是varchar类型，    &ndash;&gt;-->
+<!--        <typeHandler javaType="string" jdbcType="VARCHAR" handler="cn.tuling.mybatis.chap3.typehandler.MyTypeHandler" />-->
+<!--        <package name="cn.tuling.mybatis.chap3.typehandler"/>-->
+<!--        <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="cn.tuling.mybatis.chap3.typehandler.Sex"/>-->
+<!--        使用自定义的枚举值查询-->
+        <typeHandler handler="cn.tuling.mybatis.chap3.typehandler.SexEnumTypeHandler" javaType="cn.tuling.mybatis.chap3.typehandler.Sex"/>
+    </typeHandlers>
+    <objectFactory type="cn.tuling.mybatis.chap3.objectfactory.MyObjectFactory">
+<!--        自定义属性没有用啊 -->
+        <property name="name" value="MyObjectFactory"/>
+        <property name="pp" value="MyObjectFactory"/>
+    </objectFactory>
+<!--     环境是 开发模式-->
+    <environments default="development">
+        <environment id="development">
+    <!--            采用jdbc 事务管理-->
+            <transactionManager type="JDBC">
+<!--                自动提交关闭-->
+<!--                <property name="autoCommit" value="false"/>-->
+                <property name="autoCommit" value="true"/>
+            </transactionManager>
+    <!--            配置数据库链接池-->
+            <dataSource type="pooled">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+<!--        <mapper resource="classpath:mapper/*.xml"/>-->
+        <mapper resource="mapper/AutoConstructorMapper.xml"/>
+        <mapper resource="mapper/RoleInfoMapper.xml"/>
+        <mapper resource="mapper/StudentMapper.xml"/>
+        <mapper resource="mapper/StudentSelfCardMapper.xml"/>
+    </mappers>
+
+
+
+</configuration>
