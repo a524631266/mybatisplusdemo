@@ -18,3 +18,10 @@ select * from tbl_employee;
 # 使用 mybatisX generator
 
 
+drop procedure if exists test1;
+delimiter //
+create procedure test1(in ids int)
+begin
+    select * from tbl_employee where id = ids;
+end //;
+call test1(1);
