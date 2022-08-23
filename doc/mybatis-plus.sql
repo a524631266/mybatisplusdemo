@@ -1,3 +1,5 @@
+create database if not exists mybatis;
+
 use mybatis;
 
 create table tbl_employee(

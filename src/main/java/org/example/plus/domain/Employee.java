@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.oneworld.support.data.masking.common.annocation.DataMasking;
+import com.oneworld.support.data.masking.common.enums.MarkingStrategy;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -24,6 +26,7 @@ public class Employee implements Serializable {
     /**
      * 
      */
+    @DataMasking(maskingMode = MarkingStrategy.USERNAME)
     private String lastName;
 
     /**

@@ -1,8 +1,8 @@
-package org.example.plus;
-
+package org.example.plus.executors;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.example.plus.domain.Employee;
@@ -11,14 +11,18 @@ import org.example.plus.mapper.EmployeeMapper;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
-
-public class PlusUsingTest {
+/**
+ * @author : Liangliang.Zhang4
+ * @version : 1.0
+ * @date : 2022/8/22
+ */
+public class ExecutorsTest {
     public static void main(String[] args) throws IOException {
         SqlSessionFactory sessionFactory = PlusSessionFactory.getSessionFactory();
 
-        SqlSession sqlSession = sessionFactory.openSession();
+        // 核心点，根据不同的使用场景。
+        SqlSession sqlSession = sessionFactory.openSession(ExecutorType.REUSE);
         EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
         // 1、@link com.baomidou.mybatisplus.core.enums.SqlMethod
         Employee employee = mapper.selectById(2);
@@ -26,5 +30,4 @@ public class PlusUsingTest {
         LambdaQueryWrapper<Employee> in = Wrappers.<Employee>lambdaQuery().in(Employee::getId, Arrays.asList(1, 2, 3));
         mapper.selectList(in).forEach(System.out::println);
     }
-
 }

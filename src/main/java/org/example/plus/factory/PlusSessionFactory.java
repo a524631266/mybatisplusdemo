@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.oneworld.support.data.masking.sdk.interceptor.DataMaskingInterceptor;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.logging.log4j.Log4jImpl;
@@ -33,6 +34,7 @@ public class PlusSessionFactory {
         MybatisConfiguration configuration = new MybatisConfiguration();
         initConfiguration(configuration);
         configuration.addInterceptor(initInterceptor());
+        configuration.addInterceptor(initDataMasking());
         //扫描mapper接口所在包
         configuration.addMappers("org.example.plus.mapper");
         //配置日志实现
@@ -81,6 +83,12 @@ public class PlusSessionFactory {
         pagInter.setDbType(DbType.MYSQL);
         pagInter.setOverflow(true);
         pagInter.setLimit(500L);
+        return pagInter;
+    }
+
+    private static Interceptor initDataMasking() {
+        // 数据插件
+        DataMaskingInterceptor pagInter = new DataMaskingInterceptor();
         return pagInter;
     }
 

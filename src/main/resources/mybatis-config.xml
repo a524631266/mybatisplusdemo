@@ -58,7 +58,7 @@
     <!-- 定义一个别名 -->
     <typeAliases>
 <!--        <typeAlias type="cn.tuling.mybatis.po.Role" alias="role" />-->
-        <package name="cn.tuling.mybatis.po"/>
+<!--        <package name="cn.tuling.mybatis.po"/>-->
     </typeAliases>
     <typeHandlers>
         <!--    建表中name 是char类型，    -->
@@ -75,6 +75,10 @@
         <property name="name" value="MyObjectFactory"/>
         <property name="pp" value="MyObjectFactory"/>
     </objectFactory>
+    <plugins>
+        <plugin interceptor="com.oneworld.support.data.masking.sdk.interceptor.DataMaskingInterceptor">
+        </plugin>
+    </plugins>
 <!--     环境是 开发模式-->
     <environments default="development">
         <environment id="development">
@@ -96,11 +100,13 @@
 
     <mappers>
 <!--        <mapper resource="classpath:mapper/*.xml"/>-->
-        <mapper resource="mapper/AutoConstructorMapper.xml"/>
-        <mapper resource="mapper/RoleInfoMapper.xml"/>
-        <mapper resource="mapper/StudentMapper.xml"/>
-        <mapper resource="mapper/StudentSelfCardMapper.xml"/>
+<!--        <mapper resource="mapper/AutoConstructorMapper.xml"/>-->
+<!--        <mapper resource="mapper/RoleInfoMapper.xml"/>-->
+<!--        <mapper resource="mapper/StudentMapper.xml"/>-->
+<!--        <mapper resource="mapper/StudentSelfCardMapper.xml"/>-->
+
     </mappers>
+
 
 
 
