@@ -77,6 +77,7 @@
     </objectFactory>
     <plugins>
         <plugin interceptor="com.oneworld.support.data.masking.sdk.interceptor.DataMaskingInterceptor">
+            <property name="af" value="b"/>
         </plugin>
     </plugins>
 <!--     环境是 开发模式-->
